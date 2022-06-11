@@ -1,0 +1,9 @@
+[2022-06-11 17:37:11] [TRACE] [main.main main.go 11] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [WARNING] [main.main main.go 12] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [ERROR] [main.main main.go 13] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [FATAL] [main.main main.go 14] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [DEBUG] [main.main main.go 10] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [TRACE] [main.main main.go 11] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [WARNING] [main.main main.go 12] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [ERROR] [main.main main.go 13] 傻屄id:18,name:王森堡
+[2022-06-11 17:37:11] [FATAL] [main.main main.go 14] 傻屄id:18,name:王森堡
