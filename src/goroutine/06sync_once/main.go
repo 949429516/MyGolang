@@ -30,7 +30,7 @@ func f2(ch1 <-chan int, ch2 chan<- int) {
 	f := func() {
 		close(ch2)
 	}
-	once.Do(f) //只执行一次
+	once.Do(f) //只执行一次,没有参数的函数
 }
 func main() {
 	a := make(chan int, 100)
