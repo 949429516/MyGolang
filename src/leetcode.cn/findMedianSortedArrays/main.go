@@ -51,11 +51,11 @@ func getK(nums1, nums2 []int, k int) int {
 		}
 		if nums1[index1] <= nums2[index2] {
 			nums1 = nums1[index1+1:]
-			k -= half
+			k -= index1+1
 			index1 = 0
 		} else {
 			nums2 = nums2[index2+1:]
-			k -= half
+			k -= index2+1
 			index2 = 0
 		}
 	}
