@@ -30,6 +30,7 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	}
 }
 func getK(nums1, nums2 []int, k int) int {
+	//查找第K小的数字，K就是中位数。由于是从小到大，所以中位数左侧的永远小于右侧。两个切片比较，排除第一个小的数字一直到第K个。k就是中位数
 	index1, index2 := 0, 0
 	for {
 		if index1 == len(nums1) {
@@ -51,11 +52,11 @@ func getK(nums1, nums2 []int, k int) int {
 		}
 		if nums1[index1] <= nums2[index2] {
 			nums1 = nums1[index1+1:]
-			k -= index1+1
+			k -= index1 + 1
 			index1 = 0
 		} else {
 			nums2 = nums2[index2+1:]
-			k -= index2+1
+			k -= index2 + 1
 			index2 = 0
 		}
 	}
