@@ -8,6 +8,7 @@ import (
 
 var (
 	tailObj *tail.Tail
+	LogChan chan string
 )
 
 // 专门从日志文件收集
@@ -25,4 +26,8 @@ func Init(fileName string) (err error) {
 		return
 	}
 	return
+}
+
+func ReadChan() <-chan *tail.Line {
+	return tailObj.Lines
 }
