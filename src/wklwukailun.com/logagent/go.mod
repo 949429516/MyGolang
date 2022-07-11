@@ -5,6 +5,7 @@ go 1.18
 require (
 	github.com/Shopify/sarama v1.34.1
 	github.com/hpcloud/tail v1.0.0
+	gopkg.in/ini.v1 v1.66.6
 )
 
 require (
