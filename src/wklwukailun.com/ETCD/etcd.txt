@@ -1,0 +1,8 @@
+接口切换
+export ETCDCTL_API=3
+增加
+./etcdctl --endpoints=http://127.0.0.1:2379 put wangsenbao "DSB"
+获取
+./etcdctl --endpoints=http://127.0.0.1:2379 get wangsenbao
+删除
+./etcdctl  --endpoints=http://127.0.0.1:2379 del wangsenbao
