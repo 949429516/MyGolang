@@ -1,9 +1,0 @@
-141864
-cloud.google.com/go/datastore v1.0.0 h1:Kt+gOPPp2LEPWp8CSfxhsM8ik9CcyE/gYu+0r+RnZvM=
-cloud.google.com/go/datastore v1.0.0/go.mod h1:LXYbyblFSglQ5pkeyhO+Qmw7ukd3C+pD7TKLgZqpHYE=
-
-go.sum database tree
-10412229
-zz6RrvQkqUSbxu8QKx0MbOYCtcZKfl8nf3XSt4EzkOc=
-
-— sum.golang.org Az3grq6HK0jx36E43OHMEqPeUYL/1qQM5DgJi+WP2fCRKJavmMHV9gZ+EPQXsBNCcj5DdYi6X4fm7uCxSJXRkgFSZw4=
