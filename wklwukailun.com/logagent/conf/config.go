@@ -8,7 +8,7 @@ type KafkaConf struct {
 	Address string `ini:"address"`
 }
 type EtcdConf struct {
-	Address string `ini:"addresss"`
+	Address string `ini:"address"`
 	Timeout int    `ini:"timeout"`
 }
 

@@ -49,7 +49,17 @@ func main() {
 		return
 	}
 	fmt.Println("connect to etcd success")
-
+	// 2.1 从etcd中获取日志收集项的配置信息
+	logEntryConf, err := etcd.GetConf("/xxx")
+	if err != nil {
+		fmt.Println("get conf failed, err:", err)
+		return
+	}
+	fmt.Println("get conf from etcd success", logEntryConf)
+	for index, value := range logEntryConf {
+		fmt.Println(index, value)
+	}
+	// 2.2 派哨兵监视日志收集项的变化(有变化及时通知为的logAgent实现日志加载配置)
 	// 2.打开日志文件准备收集日志
 	// err = taillog.Init(cfg.TaillogConf.FileName)
 	// if err != nil {

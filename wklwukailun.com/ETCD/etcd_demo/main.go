@@ -24,21 +24,24 @@ func main() {
 	defer cli.Close()
 	// put
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
-	_, err = cli.Put(ctx, "wangsenbao", "dsb")
+	//_, err = cli.Put(ctx, "wangsenbao", "dsb")
+	value := `[{"path":"/opt/nginx.log","topic":"web_log"},{"path":"/usr/redis.log","topic":"redis_log"}]`
+	_, err = cli.Put(ctx, "/xxx", value)
 	cancel()
 	if err != nil {
 		fmt.Println("put to etcd failed, err:", err)
 		return
 	}
+
 	// get
-	ctx, cancel = context.WithTimeout(context.Background(), time.Second)
-	resp, err := cli.Get(ctx, "wangsenbao")
-	cancel()
-	if err != nil {
-		fmt.Println("get to etcd failed, err:", err)
-		return
-	}
-	for _, ev := range resp.Kvs {
-		fmt.Printf("%s:%s\n", ev.Key, ev.Value)
-	}
+	// ctx, cancel = context.WithTimeout(context.Background(), time.Second)
+	// resp, err := cli.Get(ctx, "/xxx")
+	// cancel()
+	// if err != nil {
+	// 	fmt.Println("get to etcd failed, err:", err)
+	// 	return
+	// }
+	// for _, ev := range resp.Kvs {
+	// 	fmt.Printf("%s:%s\n", ev.Key, ev.Value)
+	// }
 }
