@@ -8,6 +8,7 @@ import (
 	"wklwukailun.com/logagent/conf"
 	"wklwukailun.com/logagent/etcd"
 	"wklwukailun.com/logagent/kafka"
+	"wklwukailun.com/logagent/taillog"
 )
 
 var (
@@ -36,7 +37,7 @@ func main() {
 		return
 	}
 	// 1.初始化kafka连接
-	err = kafka.Init([]string{cfg.KafkaConf.Address})
+	err = kafka.Init([]string{cfg.KafkaConf.Address}, cfg.KafkaConf.ChanMaxSize)
 	if err != nil {
 		fmt.Println("init kafka failed,err", err)
 		return
@@ -50,7 +51,7 @@ func main() {
 	}
 	fmt.Println("connect to etcd success")
 	// 2.1 从etcd中获取日志收集项的配置信息
-	logEntryConf, err := etcd.GetConf("/xxx")
+	logEntryConf, err := etcd.GetConf(cfg.EtcdConf.Key)
 	if err != nil {
 		fmt.Println("get conf failed, err:", err)
 		return
@@ -67,6 +68,10 @@ func main() {
 	// }
 	// fmt.Println("init taillog success")
 	// run()
+	// 3.收集日志发往kafak
+	// 3.1 循环每一个收集项，创建tailobj 3.2 发往kafka
+	taillog.Init(logEntryConf)
+
 }
 
 // kafka自带消费者 ./kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic=web_log --from-beginning

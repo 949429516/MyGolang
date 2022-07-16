@@ -13,9 +13,10 @@ var (
 	cli *clientv3.Client
 )
 
+// 需要收集日志的配置信息
 type LogEntry struct {
-	Path  string `json:"path"`
-	Topic string `json:"topic"`
+	Path  string `json:"path"`  // 日志存放的路径
+	Topic string `json:"topic"` // 日志要发往kafka中的topic
 }
 
 // 初始化etcd的方法
@@ -43,7 +44,7 @@ func GetConf(key string) (logEntry []*LogEntry, err error) {
 	for _, ev := range resp.Kvs {
 		err = json.Unmarshal(ev.Value, &logEntry)
 		if err != nil {
-			fmt.Println("UNmarshal etcd value failed, err:", err)
+			fmt.Println("Unmarshal etcd value failed, err:", err)
 			return
 		}
 	}
