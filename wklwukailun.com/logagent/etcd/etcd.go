@@ -50,3 +50,25 @@ func GetConf(key string) (logEntry []*LogEntry, err error) {
 	}
 	return
 }
+
+// etcd watch
+func WatchConf(key string, newConfCh chan<- []*LogEntry) {
+	ch := cli.Watch(context.Background(), key)
+	// 只要变化这个通道就能获取到值
+	for wresp := range ch {
+		for _, evt := range wresp.Events {
+			fmt.Printf("Type:%v,key:%v,value:%v\n", evt.Type, string(evt.Kv.Key), string(evt.Kv.Value))
+			// 通知taillog.tskMgr有新配置
+			// 1.判断类型
+			var newConf []*LogEntry
+			if evt.Type != clientv3.EventTypeDelete {
+				// 如果是删除操作,手动传递空的
+				err := json.Unmarshal(evt.Kv.Value, &newConf)
+				if err != nil {
+					continue
+				}
+			}
+			newConfCh <- newConf
+		}
+	}
+}

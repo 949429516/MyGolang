@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 
 	"gopkg.in/ini.v1"
@@ -60,7 +61,6 @@ func main() {
 	for index, value := range logEntryConf {
 		fmt.Println(index, value)
 	}
-	// 2.2 派哨兵监视日志收集项的变化(有变化及时通知为的logAgent实现日志加载配置)
 	// 2.打开日志文件准备收集日志
 	// err = taillog.Init(cfg.TaillogConf.FileName)
 	// if err != nil {
@@ -71,7 +71,12 @@ func main() {
 	// 3.收集日志发往kafak
 	// 3.1 循环每一个收集项，创建tailobj 3.2 发往kafka
 	taillog.Init(logEntryConf)
-
+	// 3.2 派哨兵监视日志收集项的变化(有变化及时通知为的logAgent实现日志加载配置)
+	newConfChan := taillog.NewConfChan() // 从taillog包中获取对外暴露的通道
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go etcd.WatchConf(cfg.EtcdConf.Key, newConfChan) // 哨兵发现最新的配置信息通知上面的通道
+	wg.Wait()
 }
 
 // kafka自带消费者 ./kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic=web_log --from-beginning
