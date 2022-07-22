@@ -64,7 +64,7 @@ func sendToKafka() {
 			if err != nil {
 				return
 			}
-			fmt.Printf("pid:%v,offset:%v\n", pid, offset)
+			fmt.Printf("pid:%v,offset:%v,msg:%v\n", pid, offset, ld.data)
 		default:
 			time.Sleep(time.Millisecond * 50)
 		}

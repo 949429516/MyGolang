@@ -25,10 +25,10 @@ func main() {
 	// put
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 	//_, err = cli.Put(ctx, "wangsenbao", "dsb")
-	value := `[{"path":"/opt/nginx.log","topic":"web_log"},{"path":"/usr/redis.log","topic":"redis_log"}]`
-	//value := `[{"path":"/usr/mysql.log","topic":"mysql_log"}]`
+	value := `[{"path":"/opt/nginx.log","topic":"web_log"},{"path":"/opt/redis.log","topic":"redis_log"}]`
+	//value := `[{"path":"/opt/mysql.log","topic":"mysql_log"}]`
 
-	_, err = cli.Put(ctx, "/logagent/collecct_config", value)
+	_, err = cli.Put(ctx, "/logagent/192.168.0.106/collecct_config", value)
 	cancel()
 	if err != nil {
 		fmt.Println("put to etcd failed, err:", err)

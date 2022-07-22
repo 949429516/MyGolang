@@ -66,4 +66,4 @@ func main() {
 	wg.Wait()
 }
 
-// kafka自带消费者 ./kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic= --from-beginning
+// kafka自带消费者 ./kafka-console-consumer.sh --bootstrap-server 127.0.0.1:9092 --topic=web_log --from-beginning
