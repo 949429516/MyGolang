@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	cfg = new(conf.AppConf)
+	cfg = new(conf.AppConf) //返回对应类型的指针
 )
 
 // logAgent入口程序
