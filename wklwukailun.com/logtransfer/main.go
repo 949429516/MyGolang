@@ -21,7 +21,7 @@ func main() {
 	}
 	// 2.初始化ES
 	// 2.1初始化一个ES连接client
-	err = es.Init(cfg.ESCfg.Address)
+	err = es.Init(cfg.ESCfg.Address, cfg.ESCfg.ChanSize, cfg.ESCfg.ChanNums)
 	if err != nil {
 		fmt.Println("init es failed,err", err)
 		return

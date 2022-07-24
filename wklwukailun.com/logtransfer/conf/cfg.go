@@ -10,5 +10,7 @@ type KafkaCfg struct {
 	Topic   string `ini:"topic"`
 }
 type ESCfg struct {
-	Address string `ini:"address"`
+	Address  string `ini:"address"`
+	ChanSize int    `ini:"chan_size"`
+	ChanNums int    `ini:"channums"`
 }

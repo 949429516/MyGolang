@@ -33,10 +33,12 @@ func Init(addrs []string, topic string) (err error) {
 			for msg := range pc.Messages() {
 				fmt.Printf("Partition:%d Offset:%d Key:%v Value:%v\n", msg.Partition, msg.Offset, msg.Key, string(msg.Value))
 				// 发送ES
-				ld := map[string]interface{}{
-					"data": string(msg.Value),
-				}
-				es.SendToES(topic, ld)
+				// ld := map[string]interface{}{
+				// 	"data": string(msg.Value),
+				// }
+				ld := es.LogData{Topic: topic, Data: string(msg.Key)}
+				// 优化:放到一个chan中
+				es.SendToESChan(&ld)
 			}
 		}(pc)
 	}
