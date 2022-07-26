@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>上传文件</title>
+    </head>
+    <body>
+        <form action="http://127.0.0.1:8000/upload" method="post" enctype="multipart/form-data">
+            文件:
+            <input type="file" name="file">
+            <!-- <input type="file" name="file" multiple>多个文件 -->
+            <br>
+            <input type="submit" value="提交">
+        </form>
+    </body>
+</html>
