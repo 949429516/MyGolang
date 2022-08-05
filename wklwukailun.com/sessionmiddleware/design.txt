@@ -3,7 +3,7 @@ session以key-value的形式存放在服务端 xxxyyy:islogin=true...
 
 1.设计一个通用的session服务，支持内存和redis存储
 2.session模块设计
-    2.1 本质上三k-v系统，通过key进行增删改查
+    2.1 本质上是k-v系统，通过key进行增删改查
     2.2 session可以存在内存或redis
     2.3 
         session-->sessionMgr           多对一的关系
