@@ -32,12 +32,13 @@ import (
 )
 
 func makeLargestSpecial(s string) string {
-	// 1.如果切割出的字符串<=2则返回
+	// 1.如果切割出的字符串<=2则返回,作为递归出口
 	if len(s) <= 2 {
 		return s
 	}
 	// 2.创建一个排序切片字符串,将切割出的字符串从达到小排序
-	slice := sort.StringSlice{}
+	slice := []string{}
+	//slice := sort.StringSlice{} //直接使用sort包中创建切片或者使用sort.StringSlice(最终转换
 	left, cur := 0, 0 // left为循环的左侧位置，cur为计数当为0时进入递归
 	for index, b := range s {
 		// 3. '1'相当于左括号+1，'0'相当于右括号-1
@@ -46,13 +47,15 @@ func makeLargestSpecial(s string) string {
 		} else {
 			cur--
 		}
-		// 4.当cur为0时候则说明找到了闭合，将其闭合“括号”内的继续递归计算，将结果加入slice中
+		// 4.当cur为0时候则说明找到了闭合，将其闭合“括号”内(1...0之间)的继续递归计算，将结果加入slice中
 		if cur == 0 {
+			// 递归入口
 			slice = append(slice, "1"+makeLargestSpecial(s[left+1:index])+"0")
 			left = index + 1
 		}
 	}
-	sort.Sort(sort.Reverse(slice))
+	// 切片中的元素降序排列
+	sort.Sort(sort.Reverse(sort.StringSlice(slice)))
 	return strings.Join(slice, "")
 }
 

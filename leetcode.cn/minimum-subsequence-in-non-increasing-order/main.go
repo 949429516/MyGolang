@@ -28,7 +28,7 @@ import (
 )
 
 func minSubsequence(nums []int) []int {
-	// 1.从达到小排序
+	// 1.从大到小排序,降序
 	sort.Sort(sort.Reverse(sort.IntSlice(nums)))
 	// 2.计算切片所有数字总和
 	max := 0
