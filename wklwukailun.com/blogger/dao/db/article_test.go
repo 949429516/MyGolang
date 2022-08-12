@@ -1,6 +1,7 @@
 package db
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -36,12 +37,13 @@ func TestGetAricleList(t *testing.T) {
 	if err != nil {
 		return
 	}
-	t.Logf("article:%v", len(articleList))
+	t.Logf("article:%v", articleList)
 }
 
 func TestGetAricleDetail(t *testing.T) {
 	articleList, err := GetAricleDetail(1)
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 	t.Logf("article:%v", articleList)

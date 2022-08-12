@@ -22,7 +22,7 @@ func InsertAritcle(article *model.ArticleDetail) (articleId int64, err error) {
 
 // 获取文章列表，作分页
 func GetAricleList(pageNum, pageSize int) (articleList []*model.ArticleInfo, err error) {
-	if pageNum <= 0 || pageSize <= 0 {
+	if pageNum < 0 || pageSize < 0 {
 		return
 	}
 	// 时间降序排序
@@ -37,14 +37,15 @@ func GetAricleDetail(articleId int64) (articleDetail *model.ArticleDetail, err e
 	if articleId < 0 {
 		return
 	}
+	articleDetail = &model.ArticleDetail{}
 	sqlStr := `select id,category_id,summary,title,view_count,create_time,comment_count,username,content from article where id = ? and status = 1;`
-	err = DB.Get(&articleDetail, sqlStr, articleId)
+	err = DB.Get(articleDetail, sqlStr, articleId)
 	return
 }
 
 // 根据分类id，查询这一类文章
 func GetAricleListByCatrgoryId(articleId, pageNum, pageSize int) (articleList []*model.ArticleInfo, err error) {
-	if pageNum <= 0 || pageSize <= 0 {
+	if pageNum < 0 || pageSize < 0 {
 		return
 	}
 	sqlStr := `select id,category_id,summary,title,view_count,create_time,comment_count,username from article where

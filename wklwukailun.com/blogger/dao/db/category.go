@@ -1,8 +1,6 @@
 package db
 
 import (
-	"fmt"
-
 	"github.com/jmoiron/sqlx"
 	"wklwukailun.com/blogger/model"
 )
@@ -33,7 +31,6 @@ func GetCategoryList(categoryIds []int64) (categoryList []*model.Category, err e
 	if err != nil {
 		return
 	}
-	fmt.Println(sqlStr, args)
 	// 查询
 	err = DB.Select(&categoryList, sqlStr, args...)
 	return
