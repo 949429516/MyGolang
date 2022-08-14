@@ -47,19 +47,35 @@ func main() {
 	//m2["aaa"] = []int{10, 20, 30}
 	//fmt.Println(m2)
 
-	var MyMap = make(map[string]int, 10)
-	saveS := ""
-	s := "how do you do"
-	for i := 0; i < len(s); i++ {
-		a := fmt.Sprintf("%c", s[i])
-		if a == " " {
-			MyMap[saveS] += 1
-			saveS = ""
-			continue
-		} else {
-			saveS += a
+	// var MyMap = make(map[string]int, 10)
+	// saveS := ""
+	// s := "how do you do"
+	// for i := 0; i < len(s); i++ {
+	// 	a := fmt.Sprintf("%c", s[i])
+	// 	if a == " " {
+	// 		MyMap[saveS] += 1
+	// 		saveS = ""
+	// 		continue
+	// 	} else {
+	// 		saveS += a
+	// 	}
+	// }
+	// MyMap[saveS] += 1
+	// fmt.Println(MyMap)
+
+	articleInfoList := []int64{1, 2, 3, 4, 2, 3, 3}
+	ids := []int64{}
+	type a struct{}
+	m := make(map[int64]a)
+	// 遍历文章，得到每个id
+	for _, article := range articleInfoList {
+		// 从当前取出分类id
+		// 去重复
+		if _, ok := m[article]; !ok {
+			m[article] = a{}
+			ids = append(ids, article)
 		}
 	}
-	MyMap[saveS] += 1
-	fmt.Println(MyMap)
+	fmt.Println(ids)
+
 }
