@@ -35,12 +35,12 @@ type Raft struct {
 	timeout         int        // 超时时间
 }
 
-// 0还没有商人,-1没有编号
+// 0还没有任期,-1没有leader编号
 var leader = Leader{0, -1}
 
 func Make(me int) *Raft {
 	rand.Seed(time.Now().UnixNano()) // 设置随机种子
-	return &Raft{
+	rf := &Raft{
 		me:            me,
 		currentTerm:   0,
 		votedFor:      -1, //-1谁都不投票,次为节点刚创建
@@ -52,6 +52,11 @@ func Make(me int) *Raft {
 		heartbeatRe:   make(chan bool),
 		timeout:       0,
 	}
+	// 选举的协程
+	go rf.election()
+	// 心跳检测的协程
+	go rf.sendLeaderHeartBeat()
+	return rf
 }
 
 // 设置任期
@@ -85,21 +90,21 @@ func (rf *Raft) election() {
 		result = false
 		for !result {
 			// 选主leader
+
 		}
 	}
 }
 
 // 选主逻辑
 func (rf *Raft) election_one_round(leader *Leader) bool {
-	var timeout int64 // 定义超时
-	timeout = 100
 	var vote int             // 投票数量
 	var triggerHearbeat bool // 心跳,是否开始心跳信号的产生
+	timeout := int64(100)    // 定义超时
 	last := millisecond()    //时间
 	success := false         // 用于返回值
-	// 当前节点变成candidate
+	// 加锁修改状态
 	rf.mu.Lock()
-	//修改状态
+	// 当前节点变成candidate
 	rf.becomeCandidate()
 	rf.mu.Unlock()
 	fmt.Println("start electing leader")
@@ -143,11 +148,20 @@ func (rf *Raft) election_one_round(leader *Leader) bool {
 				}
 			}
 		}
-
+		// 校验：若不超时，且票数大于一半则选举成功，break
+		if timeout+last < millisecond() || (vote > raftCount/2 || rf.currentLeader > -1) {
+			break
+		} else {
+			// 等待操作
+			select {
+			case <-time.After(time.Duration(10) * time.Millisecond):
+			}
+		}
 	}
+	return success
 }
 
-// 修改状态candidate
+// 修改状态为candidate
 func (rf *Raft) becomeCandidate() {
 	rf.state = 1
 	rf.setTerm(rf.currentTerm + 1)
@@ -160,6 +174,25 @@ func (rf *Raft) becomeLeader() {
 	rf.state = 2
 	rf.currentLeader = rf.me
 }
+
+// 1.leader节点发送心跳信号,2.数据传输、同步3.检查从节点是否正常
+func (rf *Raft) sendLeaderHeartBeat() {
+	// 死循环
+	for {
+		select {
+		case <-rf.heartBeat:
+			rf.sendAppendEntriesImpl()
+		}
+	}
+}
+
+// 用于返回给leader的确认信号
+func (rf *Raft) sendAppendEntriesImpl() {
+	// 如果是主节点不执行
+	if rf.currentLeader == rf.me {
+		// 此时自己就是leader
+	}
+}
 func main() {
 	// 过程：有3个节点，最初都是follower
 	// 若有candidate状态，进行投票拉票
@@ -168,6 +201,7 @@ func main() {
 	// 创建3个节点
 	for i := 0; i < raftCount; i++ {
 		// 创建3个raft节点
+		Make(i)
 	}
 	for {
 	}
