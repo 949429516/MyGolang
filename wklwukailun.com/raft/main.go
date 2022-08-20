@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
 	"sync"
 	"time"
@@ -43,7 +44,7 @@ func Make(me int) *Raft {
 	rf := &Raft{
 		me:            me,
 		currentTerm:   0,
-		votedFor:      -1, //-1谁都不投票,次为节点刚创建
+		votedFor:      -1, //-1谁都不投票,此为节点刚创建
 		state:         0,  //0 follower
 		currentLeader: -1,
 		message:       make(chan bool),
@@ -90,7 +91,7 @@ func (rf *Raft) election() {
 		result = false
 		for !result {
 			// 选主leader
-
+			result = rf.election_one_round(&leader)
 		}
 	}
 }
@@ -189,8 +190,31 @@ func (rf *Raft) sendLeaderHeartBeat() {
 // 用于返回给leader的确认信号
 func (rf *Raft) sendAppendEntriesImpl() {
 	// 如果是主节点不执行
+	var success_count int
 	if rf.currentLeader == rf.me {
 		// 此时自己就是leader
+		success_count = 0 // 记录确认信号的节点个数
+		// 设置确认信号
+		for i := 0; i < raftCount; i++ {
+			if i != rf.me {
+				go func() {
+					rf.heartbeatRe <- true
+				}()
+			}
+		}
+	}
+	// 计算返回确认信号个数
+	for i := 0; i < raftCount; i++ {
+		select {
+		case ok := <-rf.heartbeatRe:
+			if ok {
+				success_count++
+				if success_count > raftCount/2 {
+					fmt.Println("投票选举成功,心跳信号OK")
+					log.Fatal("程序结束")
+				}
+			}
+		}
 	}
 }
 func main() {
