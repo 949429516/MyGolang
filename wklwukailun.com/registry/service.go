@@ -15,3 +15,9 @@ type Node struct {
 	Port   int    `json:"port"`
 	Weight int    `json:"weight"`
 }
+
+// NodeInfo 单个服务节点的信息, Name为服务名称
+type NodeInfo struct {
+	ServiceName string `json:"name"`
+	Node        `json:"node"`
+}
