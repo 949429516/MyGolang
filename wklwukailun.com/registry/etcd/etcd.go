@@ -22,7 +22,7 @@ const (
 
 // Registry etcd注册插件
 type Registry struct {
-	cfg                *registry.Config
+	cfg                *registry.Options
 	client             *clientv3.Client
 	serviceCh          chan *registry.Service // 用于把服务注册转到goroutine完成
 	registryServiceMap map[string]*RegistryService
@@ -68,7 +68,7 @@ func (r *Registry) Name() string {
 
 // Init 实现registry.Registry接口
 func (r *Registry) Init(ctx context.Context, opts ...registry.Option) (err error) {
-	r.cfg = &registry.Config{}
+	r.cfg = &registry.Options{}
 	for _, op := range opts {
 		op(r.cfg)
 	}
@@ -205,7 +205,7 @@ func (r *Registry) registerService(registryService *RegistryService) (err error)
 	defer cancle()
 	resp, err := r.client.Grant(ctx, r.cfg.HeartBeat)
 	if err != nil {
-		err = fmt.Errorf("注册服务失败，err=%v", err)
+		err = fmt.Errorf("注册服务失败,err=%v", err)
 		return
 	}
 	registryService.id = resp.ID
@@ -239,7 +239,7 @@ func (r *Registry) registerService(registryService *RegistryService) (err error)
 }
 
 func (r *Registry) serviceNodePath(nodeInfo registry.NodeInfo) string {
-	addrs := fmt.Sprintf("%s:%d", nodeInfo.IP, nodeInfo.Port)
+	addrs := fmt.Sprintf("%s:%d", nodeInfo.Ip, nodeInfo.Port)
 	// 使用path自动增加/
 	return path.Join(r.cfg.RegistryPath, nodeInfo.ServiceName, addrs)
 }
