@@ -1,0 +1,8 @@
+描述golang语言的初始化顺序:包、变量、常量、init、函数
+
+main包
+import
+全局常量const
+全局变量var
+init
+函数
