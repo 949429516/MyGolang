@@ -1,0 +1,20 @@
+1.描述golang语言的初始化顺序:包、变量、常量、init、函数
+
+main包
+import
+全局常量const
+全局变量var
+init
+函数
+
+2.make和new的区别
+new只分配内存，make用于slice，map，和channel的初始化
+
+3.描述golang中的stack和heap的区别，分别在什么情况下会分配stack?又在何时会分配到heap中
+
+区别：
+栈stack：由编译器自动分配和释放，存变量名、各种名
+堆heap：在C里由程序员分配和释放内存，go自动处理了。存栈变量的数据值
+
+分配：
+make(xxx)  a := 3  a在栈，3在堆
