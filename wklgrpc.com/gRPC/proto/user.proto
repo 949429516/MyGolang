@@ -1,5 +1,30 @@
+//protoc -I . --go_out=plugins=grpc:. ./user.proto
 // 版本号
 syntax = "proto3";
 
+// 指定包名的位置
+option go_package = "./";
+
 // 指定包名
 package proto;
+
+// 定义结构体
+message UserRequest{
+    // 定义用户名
+    string name = 1;
+}
+
+// 响应结构体
+message UserResponse{
+    // 数字是优先级
+    int32 id = 1;
+    string name = 2;
+    int32 age = 3;
+    // repeated是可变数组,在go中转换为切片
+    repeated string hobby = 4;
+}
+
+// service定义方法
+service UserInfoService {
+    rpc GetUserInfo (UserRequest) returns (UserResponse) {}
+}
