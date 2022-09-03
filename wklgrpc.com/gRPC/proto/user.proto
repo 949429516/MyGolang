@@ -1,0 +1,5 @@
+// 版本号
+syntax = "proto3";
+
+// 指定包名
+package proto;
