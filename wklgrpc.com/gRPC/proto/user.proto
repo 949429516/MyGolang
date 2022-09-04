@@ -3,7 +3,7 @@
 syntax = "proto3";
 
 // 指定包名的位置
-option go_package = "./";
+option go_package = "./;proto";
 
 // 指定包名
 package proto;
