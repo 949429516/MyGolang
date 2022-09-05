@@ -1,0 +1,16 @@
+//protoc -I . --micro_out=. --go_out=. ./hello.proto
+syntax = "proto3";
+option go_package="./;hello";
+// 结构体
+message InfoRequest{
+    string username = 1;
+}
+
+message InfoResponse{
+    string msg = 2;
+}
+
+// 接口
+service Hello {
+    rpc Info(InfoRequest) returns (InfoResponse){}
+}
