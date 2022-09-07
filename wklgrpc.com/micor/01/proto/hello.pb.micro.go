@@ -9,11 +9,11 @@ import (
 	math "math"
 )
 
-import (
-	context "context"
-	api "github.com/micro/micro/v3/service/api"
-	client "github.com/micro/micro/v3/service/client"
-	server "github.com/micro/micro/v3/service/server"
+import ( 	
+	context "context" 	
+   client "github.com/micro/go-micro/v2/client"
+   server "github.com/micro/micro/v3/service/server"
+   api "github.com/micro/micro/v3/service/api" 
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
