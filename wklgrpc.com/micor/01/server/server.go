@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/micro/go-micro"
+	micro "github.com/asim/go-micro/v3"
 	pb "wklgrpc.com/micor/01/proto"
 )
 
