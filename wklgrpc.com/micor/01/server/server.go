@@ -21,8 +21,13 @@ func main() {
 	// 1.得到服务端实例
 	service := micro.NewService(
 		// 设置微服务的服务名，用来访问
-		// micro call hello Hello.Info {"username":"zhangsan"}
+		// micro call hello Hello.Info {\"username\":\"zhangsan\"}
 		micro.Name("hello"),
+		micro.Address("127.0.0.1:8081"),
+		micro.Metadata(map[string]string{
+			"type":         "helloworld",
+			"content-type": "Application/json",
+		}),
 	)
 	// 2.初始化实例
 	service.Init()
