@@ -1,0 +1,24 @@
+// protoc -I . --micro_out=. --go_out=. ./api.proto
+syntax = "proto3";
+option go_package = "./;api";
+// 结构体
+message CallRequest{
+    string name = 1;
+}
+
+message CallResponse{
+    string message = 2;
+}
+
+service Example{
+    rpc Call (CallRequest) returns (CallResponse){};
+}
+
+message EmptyRequest{
+}
+
+message EmptyResponse{
+}
+service Foo{
+    rpc Bar (EmptyRequest) returns (EmptyResponse);
+}
