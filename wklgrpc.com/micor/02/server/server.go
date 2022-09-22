@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"time"
 
 	micro "github.com/asim/go-micro/v3"
 	pb "wklgrpc.com/micor/02/proto"
@@ -30,7 +31,9 @@ func (f *Foo) Bar(ctx context.Context, req *pb.EmptyRequest, rsp *pb.EmptyRespon
 func main() {
 	service := micro.NewService(
 		micro.Name("go.micro.api.example"),
-		micro.Address("127.0.0.1:8081"),
+		micro.Address("127.0.0.1:8080"),
+		micro.RegisterTTL(time.Second*30),
+		micro.RegisterInterval(time.Second*10),
 	)
 	service.Init()
 	err := pb.RegisterExampleHandler(service.Server(), new(Example))
