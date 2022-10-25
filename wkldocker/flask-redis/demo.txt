@@ -1,0 +1,6 @@
+启动redis
+docker run -d  --name redis redis
+启动flask
+link到redis上面 -e传递参数
+docker run -d --link redis -p 5000:5000 --name flask-redis -e REDIS_HOST=redis 949429516/flask-redis
+

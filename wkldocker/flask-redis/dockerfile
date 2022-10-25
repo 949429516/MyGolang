@@ -1,0 +1,7 @@
+FROM python:3.10.6
+LABEL maintaner="wklwukailun.cool@163.com"
+COPY . /app
+WORKDIR /app
+RUN pip install flask redis
+Expose 5000
+CMD ["python","app.py"]
