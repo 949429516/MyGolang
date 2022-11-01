@@ -1,0 +1,17 @@
+多机情况下，要保证容器IP不冲突，所以要记录所有IP，使用分布式存储记录(ettcd)
+
+etcd启动命令(node01)，注意IP
+nohup ./etcd --name docker-node1 --initial-advertise-peer-urls http://192.168.233.128:2380 --listen-peer-urls http://192.168.233.128:2380 --listen=client-urls http://192.168.233.128:2379,http://127.0.0.1:2379 --advertise-client-urls http://192.168.233.128:2379 --initial-cluster-token etcd-cluster --initial-client docker-node1=http://192.168.233.128:2380,docker-node2=http://192.168.174.142:2380 --initial-cluster-state new&
+
+etcd启动命令(node02)，注意IP
+nohup ./etcd --name docker-node1 
+--initial-advertise-peer-urls http://192.168.174.142:2380
+--listen-peer-urls http://192.168.174.142:2380
+--listen=client-urls http://192.168.174.142:2379,http://127.0.0.1:2379
+--advertise-client-urls http://192.168.174.142:2379
+--initial-cluster-token etcd-cluster
+--initial-client docker-node1=http://192.168.233.128:2380,docker-node2=http://192.168.174.142:2380
+--initial-cluster-state new&
+
+以下命令重启两台机器的docker
+./dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock --cluster-store=etcd://192.168.233.128:2379 --cluster-advertise=192.168.16.174:2375&

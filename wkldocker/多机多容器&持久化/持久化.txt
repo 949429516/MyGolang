@@ -1,0 +1,11 @@
+docker run -d -v mysql:/var/lib/mysql --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes mysql
+
+-v 指定存储目录 /var/lib/docker/volumes/mysql
+-v 本地映射 /home/nginx:/usr/share/nginx/html 
+后续创建指定同一位置会自动保存数据
+MYSQL_ALLOW_EMPTY_PASSWORD 免密
+进入docker
+docker exec -it mysql /bin/bash
+
+docker volume ls
+docker volume inspect [容器id]
