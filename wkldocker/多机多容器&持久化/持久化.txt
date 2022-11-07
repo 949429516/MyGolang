@@ -1,5 +1,6 @@
 docker run -d -v mysql:/var/lib/mysql --name mysql -e MYSQL_ALLOW_EMPTY_PASSWORD=yes mysql
 
+数据库持久化存储
 -v 指定存储目录 /var/lib/docker/volumes/mysql
 -v 本地映射 /home/nginx:/usr/share/nginx/html 
 后续创建指定同一位置会自动保存数据
@@ -9,3 +10,7 @@ docker exec -it mysql /bin/bash
 
 docker volume ls
 docker volume inspect [容器id]
+docker volumes pause 清除olumes
+
+
+docker run -d -e WORKPRESS_DB_HOST=mysql:3306 --link mysql -p 8080:80 wordpress
