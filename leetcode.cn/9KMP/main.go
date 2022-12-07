@@ -18,23 +18,23 @@ func getNext(s string) []int {
 	return next
 }
 
-//	func getNext(s string) []int {
-//		next := make([]int, len(s))
-//		next[0] = 0
-//		for i, j := 1, 0; i < len(s); i++ {
-//			for j > 0 && s[i] != s[j] {
-//				j--
-//			}
-//			if s[i] == s[j] {
-//				next[i] = next[j] + 1
-//				j++
-//			}
-//			if j == 0 && s[i] != s[j] {
-//				next[i] = 0
-//			}
-//		}
-//		return next
-//	}
+func getNext1(s string) []int {
+	next := make([]int, len(s))
+	next[0] = 0
+	for i, j := 1, 0; i < len(s); i++ {
+		for j > 0 && s[i] != s[j] {
+			j--
+		}
+		if s[i] == s[j] {
+			next[i] = next[j] + 1
+			j++
+		}
+		if j == 0 && s[i] != s[j] {
+			next[i] = 0
+		}
+	}
+	return next
+}
 func strStr(haystack string, needle string) int {
 	if len(haystack) == 0 || len(needle) == 0 {
 		return -1
@@ -55,5 +55,7 @@ func strStr(haystack string, needle string) int {
 	return -1
 }
 func main() {
-	fmt.Println(strStr("aabaabaafa", "aabaaf"))
+	// fmt.Println(strStr("aabaabaafa", "aabaaf"))
+	fmt.Println(getNext("ababcaabc"))
+	fmt.Println(getNext1("ababcaabc"))
 }
